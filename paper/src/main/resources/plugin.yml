@@ -1,0 +1,15 @@
+name: plugin-grounds-runtime
+main: gg.grounds.runtime.paper.GroundsRuntimePaperPlugin
+version: ${VERSION}
+description: Shared runtime libraries for Grounds Paper plugins
+author: Grounds Development Team and contributors
+api-version: "1.21"
+load: STARTUP
+permissions:
+  grounds.runtime.info:
+    description: Allows reading Grounds runtime library information.
+    default: op
+commands:
+  grounds-runtime:
+    description: Shows Grounds runtime library information.
+    permission: grounds.runtime.info

@@ -1,4 +1,5 @@
 import groovy.json.JsonSlurper
+import org.gradle.language.jvm.tasks.ProcessResources
 
 plugins { id("gg.grounds.kotlin-conventions") }
 
@@ -7,20 +8,21 @@ dependencies { testImplementation(kotlin("test")) }
 val generatedRuntimeCatalogDirectory =
     layout.buildDirectory.dir("generated/sources/runtimeCatalog/kotlin")
 
+val runtimeCatalogFile =
+    rootProject.layout.projectDirectory.file("runtime-catalog/grounds-runtime-libraries.json")
+
 val generateRuntimeLibraries =
     tasks.register("generateRuntimeLibraries") {
-        val catalogFile =
-            layout.projectDirectory.file("src/main/resources/grounds-runtime-libraries.json")
         val outputFile =
             generatedRuntimeCatalogDirectory.map {
                 it.file("gg/grounds/runtime/RuntimeLibraries.kt")
             }
 
-        inputs.file(catalogFile)
+        inputs.file(runtimeCatalogFile)
         outputs.file(outputFile)
 
         doLast {
-            val catalog = JsonSlurper().parse(catalogFile.asFile) as Map<*, *>
+            val catalog = JsonSlurper().parse(runtimeCatalogFile.asFile) as Map<*, *>
             val libraries = catalog["libraries"] as List<*>
             val source = buildString {
                 appendLine("package gg.grounds.runtime")
@@ -50,3 +52,5 @@ kotlin { sourceSets.named("main") { kotlin.srcDir(generatedRuntimeCatalogDirecto
 tasks
     .matching { it.name in setOf("compileKotlin", "kaptGenerateStubsKotlin") }
     .configureEach { dependsOn(generateRuntimeLibraries) }
+
+tasks.named<ProcessResources>("processResources") { from(runtimeCatalogFile) { into("") } }

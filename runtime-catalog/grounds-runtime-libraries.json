@@ -4,12 +4,12 @@
     {
       "group": "org.jetbrains.kotlin",
       "name": "kotlin-stdlib",
-      "version": "2.3.0"
+      "version": "2.3.20"
     },
     {
       "group": "org.jetbrains.kotlin",
       "name": "kotlin-stdlib-jdk8",
-      "version": "2.3.0"
+      "version": "2.3.20"
     },
     {
       "group": "org.jetbrains.kotlinx",
@@ -51,5 +51,26 @@
       "name": "grpc-netty-shaded",
       "version": "1.81.0"
     }
+  ],
+  "runtimeRelocations": {
+    "io.grpc": "gg.grounds.runtime.libs.grpc",
+    "com.google.protobuf": "gg.grounds.runtime.libs.protobuf"
+  },
+  "standaloneRelocations": {
+    "com.google.protobuf": "gg.grounds.shaded.protobuf"
+  },
+  "forbiddenConsumerJarPrefixes": [
+    "kotlin/",
+    "kotlinx/coroutines/",
+    "com/google/protobuf/",
+    "io/grpc/",
+    "META-INF/maven/com.google.protobuf/",
+    "META-INF/maven/io.grpc/"
+  ],
+  "sharedDependencyPatterns": [
+    "org.jetbrains.kotlin:.*:.*",
+    "org.jetbrains.kotlinx:.*:.*",
+    "com.google.protobuf:.*:.*",
+    "io.grpc:.*:.*"
   ]
 }

@@ -1,8 +1,10 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.gradle.api.publish.maven.MavenPublication
 
 plugins {
     id("com.gradleup.shadow")
     id("gg.grounds.kotlin-conventions")
+    `maven-publish`
 }
 
 apply(from = rootProject.file("gradle/runtime-provider-dependencies.gradle.kts"))
@@ -30,4 +32,24 @@ tasks.named<ShadowJar>("shadowJar") {
     relocate("io.grpc", "gg.grounds.runtime.libs.grpc")
     relocate("com.google.protobuf", "gg.grounds.runtime.libs.protobuf")
     mergeServiceFiles()
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/groundsgg/${rootProject.name}")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+
+    publications {
+        withType<MavenPublication>().configureEach {
+            artifactId = "${rootProject.name}-${project.name}"
+            setArtifacts(listOf(tasks.named<ShadowJar>("shadowJar")))
+        }
+    }
 }

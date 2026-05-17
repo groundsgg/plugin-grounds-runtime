@@ -5,7 +5,8 @@ data class RuntimeCatalogLibrary(val group: String, val name: String, val versio
 }
 
 fun runtimeCatalogLibraries(): List<RuntimeCatalogLibrary> {
-    val catalogFile = rootProject.layout.projectDirectory.file("common/src/main/resources/grounds-runtime-libraries.json").asFile
+    val catalogFile =
+        rootProject.layout.projectDirectory.file("runtime-catalog/grounds-runtime-libraries.json").asFile
     val catalog = JsonSlurper().parse(catalogFile) as Map<*, *>
     val libraries = catalog["libraries"] as List<*>
 

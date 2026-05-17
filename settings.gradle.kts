@@ -1,6 +1,6 @@
 rootProject.name = "plugin-grounds-runtime"
 
-include("common", "paper", "velocity")
+include("common", "paper", "runtime-bom", "runtime-catalog", "velocity")
 
 pluginManagement {
     repositories {

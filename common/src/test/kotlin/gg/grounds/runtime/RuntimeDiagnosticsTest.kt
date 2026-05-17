@@ -2,6 +2,7 @@ package gg.grounds.runtime
 
 import kotlin.test.Test
 import kotlin.test.assertContains
+import kotlin.test.assertEquals
 
 class RuntimeDiagnosticsTest {
     @Test
@@ -18,5 +19,12 @@ class RuntimeDiagnosticsTest {
         assertContains(diagnostics, "platform=paper")
         assertContains(diagnostics, "- io.grpc:grpc-api:1.81.0")
         assertContains(diagnostics, "- com.google.protobuf:protobuf-java:4.34.1")
+    }
+
+    @Test
+    fun `provided runtime libraries have unique coordinates`() {
+        val coordinates = RuntimeLibraries.provided.map { it.coordinate() }
+
+        assertEquals(coordinates.distinct(), coordinates)
     }
 }

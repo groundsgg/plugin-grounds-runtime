@@ -7,22 +7,14 @@ plugins {
     id("gg.grounds.kotlin-conventions")
 }
 
+apply(from = rootProject.file("gradle/runtime-provider-dependencies.gradle.kts"))
+
 repositories { maven("https://repo.papermc.io/repository/maven-public/") }
 
 dependencies {
     compileOnly("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
     kapt("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
     implementation(project(":common"))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.3.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.3.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
-    implementation("com.google.protobuf:protobuf-java:4.34.1")
-    implementation("io.grpc:grpc-api:1.81.0")
-    implementation("io.grpc:grpc-core:1.81.0")
-    implementation("io.grpc:grpc-context:1.81.0")
-    implementation("io.grpc:grpc-stub:1.81.0")
-    implementation("io.grpc:grpc-protobuf:1.81.0")
-    implementation("io.grpc:grpc-netty-shaded:1.81.0")
 }
 
 configure<BuildConfigExtension> {

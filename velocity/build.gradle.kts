@@ -33,6 +33,7 @@ tasks.named<ShadowJar>("shadowJar") {
     archiveBaseName.set("${rootProject.name}-${project.name}")
     archiveClassifier.set("")
     archiveVersion.set("")
+    exclude("META-INF/maven/**")
     relocate("io.grpc", "gg.grounds.runtime.libs.grpc")
     relocate("com.google.protobuf", "gg.grounds.runtime.libs.protobuf")
     mergeServiceFiles()
@@ -43,6 +44,10 @@ publishing {
         withType<MavenPublication>().configureEach {
             artifactId = "${rootProject.name}-${project.name}"
             setArtifacts(listOf(tasks.named<ShadowJar>("shadowJar")))
+            pom {
+                name.set("Grounds Runtime Velocity")
+                description.set("Shared runtime libraries for Grounds Velocity plugins")
+            }
         }
     }
 }

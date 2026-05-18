@@ -13,8 +13,8 @@ plugins {
 repositories { maven("https://repo.papermc.io/repository/maven-public/") }
 
 dependencies {
-    compileOnly("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
-    kapt("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
+    compileOnly(libs.velocity.api)
+    kapt(libs.velocity.api)
     implementation(project(":common"))
 }
 

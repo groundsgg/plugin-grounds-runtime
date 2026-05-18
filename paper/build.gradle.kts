@@ -11,7 +11,7 @@ plugins {
 repositories { maven("https://repo.papermc.io/repository/maven-public/") }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:26.1.2.build.63-stable")
+    compileOnly(libs.paper.api)
     implementation(project(":common"))
 }
 

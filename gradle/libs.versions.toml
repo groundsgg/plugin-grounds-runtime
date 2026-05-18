@@ -1,0 +1,7 @@
+[versions]
+paperApi = "26.1.2.build.63-stable"
+velocityApi = "3.5.0-SNAPSHOT"
+
+[libraries]
+paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paperApi" }
+velocity-api = { module = "com.velocitypowered:velocity-api", version.ref = "velocityApi" }

@@ -6,10 +6,9 @@ plugins {
     id("com.github.gmazzo.buildconfig")
     id("com.gradleup.shadow")
     id("gg.grounds.kotlin-conventions")
+    id("gg.grounds.runtime-provider-dependencies")
     id("maven-publish")
 }
-
-apply(from = rootProject.file("gradle/runtime-provider-dependencies.gradle.kts"))
 
 repositories { maven("https://repo.papermc.io/repository/maven-public/") }
 

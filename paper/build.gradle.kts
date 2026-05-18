@@ -4,10 +4,9 @@ import org.gradle.api.publish.maven.MavenPublication
 plugins {
     id("com.gradleup.shadow")
     id("gg.grounds.kotlin-conventions")
+    id("gg.grounds.runtime-provider-dependencies")
     `maven-publish`
 }
-
-apply(from = rootProject.file("gradle/runtime-provider-dependencies.gradle.kts"))
 
 repositories { maven("https://repo.papermc.io/repository/maven-public/") }
 

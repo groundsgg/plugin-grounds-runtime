@@ -39,17 +39,6 @@ tasks.named<ShadowJar>("shadowJar") {
 }
 
 publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/groundsgg/${rootProject.name}")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
-        }
-    }
-
     publications {
         withType<MavenPublication>().configureEach {
             artifactId = "${rootProject.name}-${project.name}"

@@ -1,56 +1,62 @@
+import com.github.gmazzo.buildconfig.BuildConfigExtension
 import groovy.json.JsonSlurper
 import org.gradle.language.jvm.tasks.ProcessResources
 
-plugins { id("gg.grounds.kotlin-conventions") }
+plugins {
+    id("com.github.gmazzo.buildconfig")
+    id("gg.grounds.kotlin-conventions")
+}
 
 dependencies { testImplementation(kotlin("test")) }
-
-val generatedRuntimeCatalogDirectory =
-    layout.buildDirectory.dir("generated/sources/runtimeCatalog/kotlin")
 
 val runtimeCatalogFile =
     rootProject.layout.projectDirectory.file("runtime-catalog/grounds-runtime-libraries.json")
 
-val generateRuntimeLibraries =
-    tasks.register("generateRuntimeLibraries") {
-        val outputFile =
-            generatedRuntimeCatalogDirectory.map {
-                it.file("gg/grounds/runtime/RuntimeLibraries.kt")
-            }
+data class RuntimeCatalogLibrary(val group: String, val name: String, val version: String)
 
-        inputs.file(runtimeCatalogFile)
-        outputs.file(outputFile)
+val RuntimeCatalogLibrary.coordinate: String
+    get() = "$group:$name:$version"
 
-        doLast {
-            val catalog = JsonSlurper().parse(runtimeCatalogFile.asFile) as Map<*, *>
-            val libraries = catalog["libraries"] as List<*>
-            val source = buildString {
-                appendLine("package gg.grounds.runtime")
-                appendLine()
-                appendLine("object RuntimeLibraries {")
-                appendLine("    val provided =")
-                appendLine("        listOf(")
-                libraries.forEach { item ->
-                    val library = item as Map<*, *>
-                    appendLine(
-                        "            RuntimeLibraryInfo(\"${library["group"]}\", \"${library["name"]}\", \"${library["version"]}\"),"
-                    )
-                }
-                appendLine("        )")
-                appendLine("}")
-            }
+fun runtimeCatalogLibraries(catalogContent: String): List<RuntimeCatalogLibrary> {
+    val catalog =
+        (JsonSlurper().parseText(catalogContent) as? Map<*, *>)
+            ?: error("Runtime catalog must be a JSON object")
+    val libraries =
+        (catalog["libraries"] as? List<*>)
+            ?: error("Runtime catalog field libraries must be an array")
 
-            outputFile.get().asFile.apply {
-                parentFile.mkdirs()
-                writeText(source)
-            }
-        }
+    return libraries.mapIndexed { index, value ->
+        val library =
+            (value as? Map<*, *>)
+                ?: error("Runtime catalog field libraries[$index] must be an object")
+        RuntimeCatalogLibrary(
+            group = library.requiredString(index, "group"),
+            name = library.requiredString(index, "name"),
+            version = library.requiredString(index, "version"),
+        )
+    }
+}
+
+fun Map<*, *>.requiredString(index: Int, field: String): String {
+    val value =
+        this[field] as? String
+            ?: error("Runtime catalog field libraries[$index].$field must be a string")
+    require(value.isNotBlank()) {
+        "Runtime catalog field libraries[$index].$field must not be blank"
+    }
+    return value
+}
+
+val runtimeLibraryCoordinates =
+    providers.fileContents(runtimeCatalogFile).asText.map { catalogContent ->
+        ArrayList(runtimeCatalogLibraries(catalogContent).map { it.coordinate })
     }
 
-kotlin { sourceSets.named("main") { kotlin.srcDir(generatedRuntimeCatalogDirectory) } }
-
-tasks
-    .matching { it.name in setOf("compileKotlin", "kaptGenerateStubsKotlin") }
-    .configureEach { dependsOn(generateRuntimeLibraries) }
+configure<BuildConfigExtension> {
+    className("RuntimeLibraryCatalog")
+    packageName("gg.grounds.runtime")
+    useKotlinOutput()
+    buildConfigField("List<String>", "providedCoordinates", runtimeLibraryCoordinates)
+}
 
 tasks.named<ProcessResources>("processResources") { from(runtimeCatalogFile) { into("") } }

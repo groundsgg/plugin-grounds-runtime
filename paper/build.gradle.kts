@@ -28,27 +28,21 @@ tasks.named<ShadowJar>("shadowJar") {
     archiveBaseName.set("${rootProject.name}-${project.name}")
     archiveClassifier.set("")
     archiveVersion.set("")
+    exclude("META-INF/maven/**")
     relocate("io.grpc", "gg.grounds.runtime.libs.grpc")
     relocate("com.google.protobuf", "gg.grounds.runtime.libs.protobuf")
     mergeServiceFiles()
 }
 
 publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/groundsgg/${rootProject.name}")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
-        }
-    }
-
     publications {
         withType<MavenPublication>().configureEach {
             artifactId = "${rootProject.name}-${project.name}"
             setArtifacts(listOf(tasks.named<ShadowJar>("shadowJar")))
+            pom {
+                name.set("Grounds Runtime Paper")
+                description.set("Shared runtime libraries for Grounds Paper plugins")
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-name: plugin-grounds-runtime
+name: GroundsPluginRuntime
 main: gg.grounds.runtime.paper.GroundsRuntimePaperPlugin
 version: ${VERSION}
 description: Shared runtime libraries for Grounds Paper plugins

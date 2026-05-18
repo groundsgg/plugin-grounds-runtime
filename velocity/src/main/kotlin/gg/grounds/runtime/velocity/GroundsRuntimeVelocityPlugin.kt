@@ -15,7 +15,7 @@ import org.slf4j.Logger
 
 @Plugin(
     id = "plugin-grounds-runtime",
-    name = "plugin-grounds-runtime",
+    name = "Grounds Plugin Runtime",
     version = BuildInfo.VERSION,
     description = "Shared runtime libraries for Grounds Velocity plugins",
     authors = ["Grounds Development Team and contributors"],

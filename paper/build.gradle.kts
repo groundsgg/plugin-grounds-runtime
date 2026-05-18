@@ -1,25 +1,18 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.gradle.api.publish.maven.MavenPublication
 
 plugins {
     id("com.gradleup.shadow")
     id("gg.grounds.kotlin-conventions")
+    id("gg.grounds.runtime-provider-dependencies")
+    `maven-publish`
 }
 
 repositories { maven("https://repo.papermc.io/repository/maven-public/") }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:26.1.2.build.63-stable")
+    compileOnly(libs.paper.api)
     implementation(project(":common"))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.3.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.3.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
-    implementation("com.google.protobuf:protobuf-java:4.34.1")
-    implementation("io.grpc:grpc-api:1.81.0")
-    implementation("io.grpc:grpc-core:1.81.0")
-    implementation("io.grpc:grpc-context:1.81.0")
-    implementation("io.grpc:grpc-stub:1.81.0")
-    implementation("io.grpc:grpc-protobuf:1.81.0")
-    implementation("io.grpc:grpc-netty-shaded:1.81.0")
 }
 
 tasks.named("build") { dependsOn("shadowJar") }
@@ -38,4 +31,24 @@ tasks.named<ShadowJar>("shadowJar") {
     relocate("io.grpc", "gg.grounds.runtime.libs.grpc")
     relocate("com.google.protobuf", "gg.grounds.runtime.libs.protobuf")
     mergeServiceFiles()
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/groundsgg/${rootProject.name}")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+
+    publications {
+        withType<MavenPublication>().configureEach {
+            artifactId = "${rootProject.name}-${project.name}"
+            setArtifacts(listOf(tasks.named<ShadowJar>("shadowJar")))
+        }
+    }
 }

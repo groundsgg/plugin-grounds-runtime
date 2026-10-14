@@ -6,11 +6,12 @@ import com.velocitypowered.api.event.Subscribe
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent
 import com.velocitypowered.api.plugin.Plugin
 import com.velocitypowered.api.proxy.ConsoleCommandSource
+import com.velocitypowered.api.proxy.Player
 import com.velocitypowered.api.proxy.ProxyServer
 import gg.grounds.BuildInfo
 import gg.grounds.runtime.RuntimeDiagnostics
+import gg.grounds.runtime.RuntimeDiagnosticsPresenter
 import gg.grounds.runtime.RuntimeManifestLoader
-import net.kyori.adventure.text.Component
 import org.slf4j.Logger
 
 @Plugin(
@@ -40,12 +41,15 @@ constructor(private val proxyServer: ProxyServer, private val logger: Logger) {
 
     private class RuntimeInfoCommand : SimpleCommand {
         override fun execute(invocation: SimpleCommand.Invocation) {
-            RuntimeDiagnostics.lines(
+            val report =
+                RuntimeDiagnostics.report(
                     runtimeId = "plugin-grounds-runtime-velocity",
                     version = BuildInfo.VERSION,
                     platform = "velocity",
                 )
-                .forEach { line -> invocation.source().sendMessage(Component.text(line)) }
+            val source = invocation.source()
+            if (source is Player) RuntimeDiagnosticsPresenter.sendPlayer(source, report)
+            else report.consoleLines().forEach { line -> source.sendPlainMessage(line) }
         }
 
         override fun hasPermission(invocation: SimpleCommand.Invocation): Boolean {

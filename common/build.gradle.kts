@@ -7,7 +7,15 @@ plugins {
     id("gg.grounds.kotlin-conventions")
 }
 
-dependencies { testImplementation(kotlin("test")) }
+dependencies {
+    api("gg.grounds:library-i18n:0.3.0")
+    compileOnly("net.kyori:adventure-api:4.17.0")
+
+    testImplementation(kotlin("test"))
+    testImplementation("net.kyori:adventure-api:4.17.0")
+    testImplementation("net.kyori:adventure-text-minimessage:4.17.0")
+    testImplementation("net.kyori:adventure-text-serializer-plain:4.17.0")
+}
 
 val runtimeCatalogFile =
     rootProject.layout.projectDirectory.file("runtime-catalog/grounds-runtime-libraries.json")

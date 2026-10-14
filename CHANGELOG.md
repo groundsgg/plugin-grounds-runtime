@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/groundsgg/plugin-grounds-runtime/compare/v0.1.1...v0.2.0) (2026-10-14)
+
+
+### Features
+
+* **chat:** unify localized grounds-runtime messages ([#6](https://github.com/groundsgg/plugin-grounds-runtime/issues/6)) ([ef9cb90](https://github.com/groundsgg/plugin-grounds-runtime/commit/ef9cb9018952cb4d5bbd41447767411b8240597f))
+
 ## [0.1.1](https://github.com/groundsgg/plugin-grounds-runtime/compare/v0.1.0...v0.1.1) (2026-05-18)
 
 

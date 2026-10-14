@@ -15,6 +15,10 @@ This repository owns the shared runtime platform:
 
 `runtime-catalog/grounds-runtime-libraries.json` is the source of truth for shared runtime library versions. The BOM and runtime diagnostics are generated from that catalog.
 
+`/grounds-runtime` player output uses the general system-message category at info level. The
+diagnostic field and library rows use the same metadata as the localized headings, while console
+output remains plain and copyable.
+
 ## Adding or updating a shared dependency
 
 Use this flow when a library should be provided by `plugin-grounds-runtime` instead of bundled into each consumer plugin.

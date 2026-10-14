@@ -24,10 +24,10 @@ class RuntimeDiagnosticsPresenterTest {
         RuntimeDiagnosticsPresenter.sendPlayer(audience, report)
 
         val messages = audience.sent.map(PlainTextComponentSerializer.plainText()::serialize)
-        assertEquals("[Grounds] Info › Grounds-Laufzeit", messages.first())
-        assertEquals("[Grounds] Info › runtimeId=plugin-grounds-runtime-velocity", messages[1])
-        assertEquals("[Grounds] Info › Bibliotheken", messages[6])
-        assertContains(messages, "[Grounds] Info › - io.grpc:grpc-api:1.81.0")
+        assertEquals("[Grounds] Allgemein › Grounds-Laufzeit", messages.first())
+        assertEquals("[Grounds] Allgemein › runtimeId=plugin-grounds-runtime-velocity", messages[1])
+        assertEquals("[Grounds] Allgemein › Bibliotheken", messages[6])
+        assertContains(messages, "[Grounds] Allgemein › - io.grpc:grpc-api:1.81.0")
     }
 
     @Test

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/groundsgg/plugin-grounds-runtime/compare/v0.2.2...v0.3.0) (2026-10-17)
+
+
+### Features
+
+* **catalog:** publish versioned permission manifest ([#12](https://github.com/groundsgg/plugin-grounds-runtime/issues/12)) ([b23ebff](https://github.com/groundsgg/plugin-grounds-runtime/commit/b23ebff92f93d534a606e621ad63431697a75f96))
+
 ## [0.2.2](https://github.com/groundsgg/plugin-grounds-runtime/compare/v0.2.1...v0.2.2) (2026-10-17)
 
 

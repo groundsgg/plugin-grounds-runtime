@@ -1,0 +1,16 @@
+{
+  "source": "plugin-grounds-runtime",
+  "permissions": [
+    {
+      "key": "grounds.runtime.info",
+      "label": "Inspect runtime information",
+      "description": "View runtime and installed library information.",
+      "supportedScopes": [
+        "GLOBAL",
+        "SERVER_TYPE",
+        "SERVER"
+      ]
+    }
+  ],
+  "sourceVersion": "${version}"
+}

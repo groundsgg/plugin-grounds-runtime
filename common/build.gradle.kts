@@ -8,7 +8,7 @@ plugins {
 }
 
 dependencies {
-    api("gg.grounds:library-i18n:0.4.3")
+    api("gg.grounds:library-i18n:0.4.4")
     compileOnly("net.kyori:adventure-api:4.17.0")
 
     testImplementation(kotlin("test"))

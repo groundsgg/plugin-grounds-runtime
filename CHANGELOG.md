@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/groundsgg/plugin-grounds-runtime/compare/v0.2.0...v0.2.1) (2026-10-17)
+
+
+### Bug Fixes
+
+* **chat:** use the shared system message layout ([#8](https://github.com/groundsgg/plugin-grounds-runtime/issues/8)) ([fcce501](https://github.com/groundsgg/plugin-grounds-runtime/commit/fcce501d0a1a5512ba9a83a0ccb6da953a24563b))
+
 ## [0.2.0](https://github.com/groundsgg/plugin-grounds-runtime/compare/v0.1.1...v0.2.0) (2026-10-14)
 
 

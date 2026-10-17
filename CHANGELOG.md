@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/groundsgg/plugin-grounds-runtime/compare/v0.2.1...v0.2.2) (2026-10-17)
+
+
+### Bug Fixes
+
+* **chat:** align context and message-level colors ([#10](https://github.com/groundsgg/plugin-grounds-runtime/issues/10)) ([8974207](https://github.com/groundsgg/plugin-grounds-runtime/commit/8974207f249494923084df4fddd5fd3d4f5d0bbf))
+
 ## [0.2.1](https://github.com/groundsgg/plugin-grounds-runtime/compare/v0.2.0...v0.2.1) (2026-10-17)
 
 
